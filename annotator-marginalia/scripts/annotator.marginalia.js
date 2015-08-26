@@ -7,7 +7,7 @@ function annotatorMarginalia(options) {
 
   options = options || {};
   // Sets the renderer function for the annotations.
-  // Defaults to statard formatting.
+  // Defaults to standard formatting.
   if(options.viewer && typeof options.viewer === 'function'){
     options.viewer = options.viewer;
   } else {
