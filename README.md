@@ -29,17 +29,21 @@ configured in the option parameters.
     </article>
 
 ##Configuration options
-
+###Class Options
 * outer_element: default `'.content'`
 * inner_element: default `'.inner'`
 * margin_class: default `'margin-container'`
+###Interaction Options
+* `viewer` Sets the renderer function for the annotations. Defaults to standard formatting
+* `toggle.show` callback function triggered when the margin notes are shown
+* `toggle.hide` callback function triggered when the margin notes are hidden
 
 ##Editor Extension
 Marginalia has an optional annotator editorExtension included.
 This extension is based on annotator.ui.tags.editorExtension and is used to
 create comma separated list of tags when editing. Add the extension to the
 `editorExtensions` options on the `annotator.ui.main`
-    
+
     var _marginalia = annotatorMarginalia();
     editorExtensions: [
         _marginalia.editorExtension
