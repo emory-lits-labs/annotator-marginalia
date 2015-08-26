@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Annotator demo</title>
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+    <link href="styles/annotator.css" rel="stylesheet" type="text/css"/>
+    <link href="../annotator-marginalia/styles/annotator.marginalia.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+      body {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+        letter-spacing: 0.01rem;
+        font-size: 22px;
+        line-height: 1.5;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+      header, article {
+        width: 740px;
+        margin: 2em auto;
+        position: relative;
+        z-index: 2;
+      }
+      .highlight {
+        background: rgba(255, 10, 10, 0.3);
+      }
+      .inner{
+        background: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Marginalia demonstration</h1>
+      <div class="in-page-controls"></div>
+    </header>
+
+    <article class="content">
+      <section class="inner">
+        <p>"My God!" he said, as I drew him in.</p>
+
+        <p>"What has happened?" I asked.</p>
+
+        <p>"What hasn't?"  In the obscurity I could see he made a gesture of despair.  "They wiped us out--simply wiped us out," he repeated again and again.</p>
+
+        <p>He followed me, almost mechanically, into the dining room.</p>
+
+        <p>"Take some whiskey," I said, pouring out a stiff dose.</p>
+
+        <p>He drank it.  Then abruptly he sat down before the table, put his head on his arms, and began to sob and weep like a little boy, in a perfect passion of emotion, while I, with a curious forgetfulness of my own recent despair, stood beside him, wondering.</p>
+
+        <p>It was a long time before he could steady his nerves to answer my questions, and then he answered perplexingly and brokenly.  He was a driver in the artillery, and had only come into action about seven.  At that time firing was going on across the common, and it was said the first party of Martians were crawling slowly towards their second cylinder under cover of a metal shield.</p>
+
+        <p>Later this shield staggered up on tripod legs and became the first of the fighting-machines I had seen.  The gun he drove had been unlimbered near Horsell, in order to command the sand pits, and its arrival it was that had precipitated the action.  As the limber gunners went to the rear, his horse trod in a rabbit hole and came down, throwing him into a depression of the ground.  At the same moment the gun exploded behind him, the ammunition blew up, there was fire all about him, and he found himself lying under a heap of charred dead men and dead horses.</p>
+
+        <p>"I lay still," he said, "scared out of my wits, with the fore quarter of a horse atop of me.  We'd been wiped out.  And the smell--good God!  Like burnt meat!  I was hurt across the back by the fall of the horse, and there I had to lie until I felt better.  Just like parade it had been a minute before--then stumble, bang, swish!"</p>
+      </section>
+    </article>
+
+    <!-- The main Annotator script -->
+    <script src="scripts/annotator.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="../annotator-marginalia/scripts/bootstrap.dropdown.js"></script>
+    <script src="../annotator-marginalia/scripts/annotator.marginalia.js"></script>
+    <script>
+      if (typeof annotator === 'undefined') {
+        alert("Oops! it looks like you haven't built Annotator. " +
+              "Either download a tagged release from GitHub, or build the " +
+              "package by running `make`");
+      } else {
+        var app = new annotator.App();
+        var _marginalia = annotatorMarginalia();
+
+        app.include(annotator.ui.main);
+        app.include(annotatorMarginalia);
+        app.start();
+
+        _marginalia.annotationsLoaded([]);
+      }
+    </script>
+  </body>
+</html>
