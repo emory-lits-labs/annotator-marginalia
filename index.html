@@ -1,0 +1,122 @@
+---
+---
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>annotator-marginalia by emory-lits-labs</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>annotator-marginalia</h1>
+        <p><a href="https://github.com/openannotation/annotator">Annotator.js</a>
+         plugin for creating and displaying annotations in the margin of a page.  Designed for use with Anntotator 2.x releases.</p>
+
+        <p class="view"><a href="https://github.com/emory-lits-labs/annotator-marginalia">View the Project on GitHub <small>emory-lits-labs/annotator-marginalia</small></a></p>
+
+        version {{ site.data.package.version }}
+        <ul>
+          <li><a href="https://github.com/emory-lits-labs/annotator-marginalia/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/emory-lits-labs/annotator-marginalia/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/emory-lits-labs/annotator-marginalia">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h3>
+
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h3>
+
+<p>Display annotator.js annotations in the margin of the page.</p>
+
+<p>Try it out in this <a href="demo/">simple demo</a>.</p>
+
+<h3>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<p>To use marginalia with your Annotator project, include the appropriate
+CSS and Javascript files, and add it to the app initiation as you would
+any other module.  Marginalia depends on bootstrap dropdown menus and
+moment.js for optional update time in the displayed annotation footer.
+For convenience, the built javascript includes both of these.</p>
+
+{% highlight html %}
+<link rel="stylesheet" type="text/css" href="http://emory-lits-labs.github.io/annotator-marginalia/build/{{ site.data.package.version }}/annotator.marginalia.min.css" />
+<script type="text/javascript" src="http://emory-lits-labs.github.io/annotator-marginalia/build/{{ site.data.package.version }}/annotator.marginalia.min.js"></script>
+{% endhighlight %}
+
+{% highlight javascript %}
+      var app = new annotator.App();
+      app.include(annotatorMarginalia());
+{% endhighlight %}
+
+<p>Marginalia assumes some structural requirements for the annotation margins to
+appear correctly. The class names for the outer and inner elements can be
+configured in the option parameters.</p>
+
+{% highlight html %}
+    <div class="in-page-controls"></div> <!--control container-->
+
+    <article class="content"> <!--outer_element-->
+      <section class="inner"> <!--inner_element-->
+      </section>
+    </article>
+{% endhighlight %}
+
+<p>Marginalia supports the following configuration options:</p>
+
+<p><b>Class options</b>:</p>
+<ul>
+  <li><b>outer_element</b>: default <code>.content</code></li>
+  <li><b>inner_element</b>: default <code>.inner</code></li>
+  <li><b>margin_class</b>: default <code>.margin-container</code></li>
+</ul>
+
+<p><b>Display options</b>:</p>
+<ul>
+  <li><b>show_update_date</b>: display date updated in footer; defaults to <code>true</code></li>
+  <li><b>show_author</b>: display annotationauthor in footer; defaults to <code>false</code></li>
+</ul>
+
+<p><b>Interaction options</b>:</p>
+<ul>
+<li><b>viewer</b>: Sets the renderer function for the annotations. Defaults to standard formatting</li>
+<li><b>toggle.show</b>: callback function triggered when the margin notes are shown</li>
+<li><b>toggle.hide</b>: callback function triggered when the margin notes are hidden</li>
+</ul>
+
+<p>Marginalia includes an optional annotator editorExtension.
+This extension is based on <code>annotator.ui.tags.editorExtension</code>
+and is used to create comma separated list of tags when editing. Add
+the extension to the `editorExtensions` options on the `annotator.ui.main`:
+
+{% highlight javascript %}
+    var _marginalia = annotatorMarginalia();
+    editorExtensions: [
+        _marginalia.editorExtension
+    ]
+{% endhighlight %}
+
+<h3>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+
+<p>Created by Kevin Glover (<a href="https://github.com/kevinglover" class="user-mention">@kevinglover</a>) and Rebecca Sutton Koeser (<a href="https://github.com/rlskoeser" class="user-mention">@rlskoeser</a>), 2015. Originally developed as part of <a href="https://github.com/emory-libraries/readux">readux</a>.</p>
+
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/emory-lits-labs">emory-lits-labs</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+
+  </body>
+</html>

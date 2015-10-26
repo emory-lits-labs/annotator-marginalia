@@ -1,11 +1,17 @@
 /* Marginalia  - margin annotation viewer for annotator */
 
-function annotatorMarginalia(options) {
+function annotatorMarginalia(user_options) {
 
   var _t = annotator.util.gettext;
   var _app;
 
-  options = options || {};
+  // default options
+  var options = {
+    show_update_date: true,
+    show_author: false
+  };
+  $.extend(options, user_options || {});
+
   // Sets the renderer function for the annotations.
   // Defaults to standard formatting.
   if(options.viewer && typeof options.viewer === 'function'){
@@ -54,6 +60,15 @@ function annotatorMarginalia(options) {
   var marginalia = {
       start: function (app) {
         _app = app;
+
+        // check for moment.js, used for displaying updated date
+        if (typeof(moment) == 'undefined' || typeof moment !== 'function') {
+            console.warn(_t("To display annotation updated dates, please " +
+               "include moment.js in the page."));
+            // disable showing updated dates if moment.js is not available
+            options.show_update_date = false;
+        }
+
         var toggle_html ='<span class="fa fa-file-text-o"></span>',
             toggle_attrs = {
               class:'',
@@ -125,7 +140,7 @@ function annotatorMarginalia(options) {
       },
 
       // returns an array of the rendered annotation ids
-      get_annotiations_array: function(){
+       get_annotations_array: function(){
         var $highlights = $('.annotator-hl'),
             highlight_group_annotation = '',
             annotations_array = [];
@@ -169,6 +184,8 @@ function annotatorMarginalia(options) {
             // display tags if set; based on annotator.ui.tags.viewerExtension
             var tags = marginalia.renderTags(annotation);
             $marginalia_item.append(tags);
+            $marginalia_item.append(marginalia.renderFooter(annotation));
+
 
         $marginalia_item.on('click.marginalia','.btn-edit',function(event){
           event.preventDefault();
@@ -205,6 +222,44 @@ function annotatorMarginalia(options) {
         return tags;
       },
 
+      /**
+        * Annotation footer, with update date and author.
+        * Date is configurable via show_update_date option, requires
+        * moment.js, defaults to true.
+        * Author is configruable via show_author, defaults to false.
+        */
+       renderFooter: function(annotation) {
+         if (!options.show_update_date && !options.show_author) { return; }
+         var footer = $('<div/>').addClass('annotation-footer');
+         // annotations have created and updated, but updated
+         // is always set, so just stick with that
+         if (options.show_update_date) {
+           footer.append($('<span/>').addClass('annotation-updated')
+             .html('Updated ' +
+               moment(annotation.updated).calendar(null, {
+                  sameDay: "[today at] LT",
+                  lastDay: '[yesterday at ] LT',
+                  lastWeek: '[last] dddd',
+                  sameElse: 'MMMM Do, YYYY'
+                 })));
+                 // display date relative to now; use month day year format
+                 // for dates more than a week old
+         }
+         // when showing both date and author, add connecting text
+         if (options.show_update_date && options.show_author) {
+           footer.append('<span> | </span>');
+         }
+         // NOTE: this is designed to look fine with either one or both
+         // visible; but we might want additional context when user
+         // is displayed without the date
+         if (options.show_author) {
+           footer.append($('<span/>').addClass('annotation-author')
+               .html(annotation.user));
+         }
+         return footer;
+       },
+
+
       // Add annotations to the sidebar when loaded
       annotationsLoaded: function(annotations){
         //show toggle object once annotations are loaded
@@ -217,7 +272,7 @@ function annotatorMarginalia(options) {
 
           $annotaton_list.append($empty);
 
-        var annotations_array = marginalia.get_annotiations_array();
+        var annotations_array = marginalia.get_annotations_array();
         var $margin_container = $('.'+options.margin_class);
 
         // Display annotations in the marginalia container
@@ -270,7 +325,7 @@ function annotatorMarginalia(options) {
         var $marginalia_item = marginalia.renderAnnotation(annotation);
 
         // Get the index of the annotation in context to its siblings
-        var annotations_array = marginalia.get_annotiations_array(),
+        var annotations_array = marginalia.get_annotations_array(),
         index = annotations_array.indexOf(annotation.id);
 
         // Append to annotations list...
@@ -314,6 +369,8 @@ function annotatorMarginalia(options) {
 
         $marginalia_item.find(".annotator-tags").remove();
         $marginalia_item.find(".text").html(updated_text).after(updated_tags);
+        $marginalia_item.find(".annotation-footer").remove();
+        $marginalia_item.find(".text").after(marginalia.renderFooter(annotation));
 
         return true;
       },

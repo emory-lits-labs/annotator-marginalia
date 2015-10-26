@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Annotator demo</title>
+    <title>Annotator-Marginalia demo</title>
 
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
     <link href="styles/annotator.css" rel="stylesheet" type="text/css"/>
-    <link href="../annotator-marginalia/styles/annotator.marginalia.css" rel="stylesheet" type="text/css"/>
+    <link href="../src/styles/annotator.marginalia.css" rel="stylesheet" type="text/css"/>
 
     <style>
       body {
@@ -63,22 +63,48 @@
     <!-- The main Annotator script -->
     <script src="scripts/annotator.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="../annotator-marginalia/scripts/bootstrap.dropdown.js"></script>
-    <script src="../annotator-marginalia/scripts/annotator.marginalia.js"></script>
+    <script src="../src/scripts/bootstrap.dropdown.js"></script>
+    <script src="../src/scripts/moment.min.js"></script>
+    <script src="../src/scripts/annotator.marginalia.js"></script>
     <script>
       if (typeof annotator === 'undefined') {
         alert("Oops! it looks like you haven't built Annotator. " +
               "Either download a tagged release from GitHub, or build the " +
               "package by running `make`");
       } else {
-        var app = new annotator.App();
-        var _marginalia = annotatorMarginalia();
 
-        app.include(annotator.ui.main);
-        app.include(annotatorMarginalia);
+    function generate_id() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+        // set fake date, id, and author in order to demonstrate footer,
+        // since demo operates without an annotate store
+        var fakeData = function () {
+          return {
+            beforeAnnotationCreated: function (ann) {
+              ann.updated = new Date();
+              ann.user = 'anon';
+              ann.id = generate_id();
+              console.log(ann);
+            }
+          };
+        };
+
+        var _marginalia = annotatorMarginalia();
+        var app = new annotator.App()
+          .include(annotator.ui.main)
+          .include(fakeData)
+          .include(annotatorMarginalia, {
+            show_update_date: true,
+            show_author: true
+          });
+
         app.start();
 
+        // simulate empty data load since demo has no annotation store
         _marginalia.annotationsLoaded([]);
+
       }
     </script>
   </body>

@@ -178,7 +178,18 @@ li.empty-item:first-child:last-child:after {
   cursor:initial;
 }
 
+.annotation-footer {
+  padding: 5px;
+  font-size: 75%;
+}
 
+.annotation-updated {
+  font-style: italic;
+}
+
+.annotation-author {
+  font-weight: bold;
+}
 
 /*
 ******************
