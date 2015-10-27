@@ -8,7 +8,8 @@ function annotatorMarginalia(user_options) {
   // default options
   var options = {
     show_update_date: true,
-    show_author: false
+    show_author: false,
+    toggle_class: '',
   };
   $.extend(options, user_options || {});
 
@@ -71,7 +72,7 @@ function annotatorMarginalia(user_options) {
 
         var toggle_html ='<span class="fa fa-file-text-o"></span>',
             toggle_attrs = {
-              class:'',
+              class: options.toggle.class,
               id: toggle_id,
               alt: 'Toggle Annotations',
               title: 'Show Annotations',

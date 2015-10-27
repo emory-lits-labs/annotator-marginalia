@@ -3,6 +3,8 @@ Annotator.js plugin for creating and displaying annotations in the margin of a p
 
 Marginalia is developed for [Annotator 2.x](https://github.com/openannotation/annotator/releases)
 
+[CHANGELOG](CHANGELOG.md)
+
 ##Demo
 [View a simple demo of Marginalia here.](http://emory-lits-labs.github.io/annotator-marginalia/demo/)
 
