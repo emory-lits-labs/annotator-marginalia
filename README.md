@@ -11,6 +11,7 @@ Marginalia is developed for [Annotator 2.x](https://github.com/openannotation/an
 * Annotator.js
 * [Font Awesome](https://github.com/FortAwesome/Font-Awesome) icons for the
 editing dropdown menu and the toggle button.
+* [Bootstrap dropdown](http://getbootstrap.com/components/#btn-dropdowns) for dropdown edit menu
 
 ##Using Marginalia
 To use this plugin in your Annotator project, include the required
