@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+* Document bootstrap.dropdown as a separate include
+
 ## 0.1.1
 
 * New option to make toggle button class configurable

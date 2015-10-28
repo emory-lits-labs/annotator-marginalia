@@ -10,7 +10,6 @@ module.exports = function(grunt) {
       default: {
         files: {
             'build/<%= pkg.version %>/annotator.marginalia.min.js': [
-                'src/scripts/bootstrap.dropdown.js',
                 'src/scripts/moment.min.js',
                 'src/scripts/annotator.marginalia.js'
              ]
