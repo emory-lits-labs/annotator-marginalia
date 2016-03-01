@@ -9,7 +9,10 @@ function annotatorMarginalia(user_options) {
   var options = {
     show_update_date: true,
     show_author: false,
-    toggle_class: '',
+    toggle: {
+      class: '',
+    },
+    renderExtensions: [],
   };
   $.extend(options, user_options || {});
 
@@ -206,6 +209,12 @@ function annotatorMarginalia(user_options) {
             _app.annotations['delete'](annotation);
           }
         });
+
+        // if any render extensions are defined, process and update the
+        // marginalia item before rendering
+        for(var i = 0; i < options.renderExtensions.length; i++) {
+            $marginalia_item = options.renderExtensions[i](annotation, $marginalia_item);
+        }
         return $marginalia_item;
       },
 
@@ -385,7 +394,7 @@ function annotatorMarginalia(user_options) {
 
           $('#'+toggle_id).addClass('active');
 
-          if(!!options.toggle && !!options.toggle.show){
+          if(!!options.toggle.show){
             options.toggle.show();
           }
         },
@@ -396,7 +405,7 @@ function annotatorMarginalia(user_options) {
 
           $('#'+toggle_id).removeClass('active');
 
-          if(!!options.toggle && !!options.toggle.hide){
+          if(!!options.toggle.hide){
             options.toggle.hide();
           }
         }

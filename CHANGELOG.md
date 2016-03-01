@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2
+
+* New `renderExtensions` option for customizing and extending
+   marginalia item display
+
 ## 0.1.2
 
 * Document bootstrap.dropdown as a separate include
