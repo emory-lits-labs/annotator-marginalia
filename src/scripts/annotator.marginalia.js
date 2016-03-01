@@ -11,7 +11,8 @@ function annotatorMarginalia(user_options) {
     show_author: false,
     toggle: {
       class: '',
-    }
+    },
+    renderExtensions: [],
   };
   $.extend(options, user_options || {});
 
@@ -208,6 +209,12 @@ function annotatorMarginalia(user_options) {
             _app.annotations['delete'](annotation);
           }
         });
+
+        // if any render extensions are defined, process and update the
+        // marginalia item before rendering
+        for(var i = 0; i < options.renderExtensions.length; i++) {
+            $marginalia_item = options.renderExtensions[i](annotation, $marginalia_item);
+        }
         return $marginalia_item;
       },
 

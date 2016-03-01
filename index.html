@@ -67,7 +67,13 @@ moment.js.</p>
 
 {% highlight javascript %}
       var app = new annotator.App();
-      app.include(annotatorMarginalia());
+      app.include(annotatorMarginalia({
+        show_author: true,
+        viewer: annotatormeltdown.render,
+        renderExtensions: [
+            my_custom_field.renderExtension,
+        ],
+      }));
 {% endhighlight %}
 
 <p>Marginalia assumes some structural requirements for the annotation margins to
@@ -97,11 +103,16 @@ configured in the option parameters.</p>
   <li><b>show_update_date</b>: display date updated in footer; defaults to <code>true</code></li>
   <li><b>show_author</b>: display annotation author in footer; defaults to <code>false</code></li>
   <li><b>toggle.class</b>: CSS classes to set on the toggle button element when it is created</li>
+  <li><b>renderExtensions</b>: list of functions to add fields to or otherwise update
+    the marginalia item display; functions should take an annotation and
+    the corresponding marginalia item and return the updated marginalia item.
+  </li>
 </ul>
 
 <p><b>Interaction options</b>:</p>
 <ul>
-<li><b>viewer</b>: Sets the renderer function for the annotations. Defaults to standard formatting</li>
+<li><b>viewer</b>: Sets the renderer function for the main annotation content.
+  Defaults to standard formatting</li>
 <li><b>toggle.show</b>: callback function triggered when the margin notes are shown</li>
 <li><b>toggle.hide</b>: callback function triggered when the margin notes are hidden</li>
 </ul>
@@ -109,7 +120,8 @@ configured in the option parameters.</p>
 <p>Marginalia includes an optional annotator editorExtension.
 This extension is based on <code>annotator.ui.tags.editorExtension</code>
 and is used to create comma separated list of tags when editing. Add
-the extension to the `editorExtensions` options on the `annotator.ui.main`:
+the extension to the <code>editorExtensions</code> options on the
+<code>annotator.ui.main</code>:
 
 {% highlight javascript %}
     var _marginalia = annotatorMarginalia();
