@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1
+
+* Use existing `renderAnnotation` method when updating an existing annotation; fixes an
+   issue with `renderExtensions` method only being run on initial display and not update.
+
 ## 0.2
 
 * New `renderExtensions` option for customizing and extending
