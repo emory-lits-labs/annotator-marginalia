@@ -373,15 +373,9 @@ function annotatorMarginalia(user_options) {
 
       // Update marginalia when annotations are updated
       annotationUpdated: function(annotation){
-        var $marginalia_item = $('.'+marginalia_item_class+'[data-annotation-id='+annotation.id+']'),
-            updated_text = marginalia.render(annotation),
-            updated_tags = marginalia.renderTags(annotation);
-
-        $marginalia_item.find(".annotator-tags").remove();
-        $marginalia_item.find(".text").html(updated_text).after(updated_tags);
-        $marginalia_item.find(".annotation-footer").remove();
-        $marginalia_item.find(".text").after(marginalia.renderFooter(annotation));
-
+        var $marginalia_item = $('.'+marginalia_item_class+'[data-annotation-id='+annotation.id+']');
+        // re-render and replace using same render logic for initial display
+        $marginalia_item.replaceWith(marginalia.renderAnnotation(annotation));
         return true;
       },
 
