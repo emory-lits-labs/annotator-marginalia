@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2
+
+* Fix positioning and click bindings after re-rendering an updated annotation.
+
 ## 0.2.1
 
 * Use existing `renderAnnotation` method when updating an existing annotation; fixes an
