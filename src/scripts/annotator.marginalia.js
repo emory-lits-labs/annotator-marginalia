@@ -374,8 +374,23 @@ function annotatorMarginalia(user_options) {
       // Update marginalia when annotations are updated
       annotationUpdated: function(annotation){
         var $marginalia_item = $('.'+marginalia_item_class+'[data-annotation-id='+annotation.id+']');
-        // re-render and replace using same render logic for initial display
-        $marginalia_item.replaceWith(marginalia.renderAnnotation(annotation));
+        // re-render using the same render logic for initial display
+        // (including any configured render extensions)
+        var updated_marginalia_item = marginalia.renderAnnotation(annotation);
+        // replace the old marginalia item with the new one
+        $marginalia_item.replaceWith(updated_marginalia_item);
+
+        // re-bind annotation/note click to select to apply to the
+        // new margin note
+        $('.annotator-hl').on('click.marginalia',function(event){
+          marginalia.annotationSelected(event);
+        });
+        $('.'+marginalia_item_class).find('.text').on('click.marginalia',function(event){
+          marginalia.itemSelected(event);
+        });
+
+        // trigger click to ensure item is reasonably positioned after update
+        updated_marginalia_item.find('.text').trigger('click.marginalia');
         return true;
       },
 
