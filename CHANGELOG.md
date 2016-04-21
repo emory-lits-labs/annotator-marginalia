@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3
+
+* Improved editor window placement relative to marginalia item.
+
 ## 0.2.2
 
 * Fix positioning and click bindings after re-rendering an updated annotation.
