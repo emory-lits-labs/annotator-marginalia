@@ -181,7 +181,7 @@ function annotatorMarginalia(user_options) {
             controls = controls.join('\n');
 
             $marginalia_item = $('<li/>').attr({
-              class:marginalia_item_class,
+              class: marginalia_item_class,
               'data-annotation-id': annotation.id
             }).append(controls).append(text);
 
@@ -195,11 +195,15 @@ function annotatorMarginalia(user_options) {
           event.preventDefault();
           var offset = $(this).parents(".controls").siblings(".text").offset();
 
-          _app.annotations.update(annotation);
+          // position the editor relative to the marginalia item
+          // that was clicked
           $(".annotator-editor").css({
             top: offset.top,
-            left: offset.left
+            right: offset.left
           });
+
+          // run update, which launches the editor
+          _app.annotations.update(annotation);
         })
         .on('click.marginalia','.btn-delete',function(event){
           event.preventDefault();
@@ -427,7 +431,6 @@ function annotatorMarginalia(user_options) {
 
         var $annotation_highlight = $(event.target),
             annotation_id = $annotation_highlight.data('annotation-id');
-
         marginalia.onSelected(annotation_id);
       },
 
