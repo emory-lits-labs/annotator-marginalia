@@ -8,7 +8,10 @@ Marginalia is developed for [Annotator 2.x](https://github.com/openannotation/an
 ##Demo
 [View a simple demo of Marginalia here.](http://emory-lits-labs.github.io/annotator-marginalia/demo/)
 
-##Dependancies
+## License
+**annotator-marginalia** is distributed under the Apache 2.0 License.
+
+##Dependencies
 * jQuery 1.8+
 * Annotator.js
 * [Font Awesome](https://github.com/FortAwesome/Font-Awesome) icons for the
