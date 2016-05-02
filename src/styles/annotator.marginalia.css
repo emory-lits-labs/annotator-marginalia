@@ -164,7 +164,7 @@ li.empty-item:first-child:last-child:after {
     background-color: rgb(255, 234, 234);
 }
 
-.annotator-hl{
+.annotator-hl {
   cursor: pointer;
 }
 
