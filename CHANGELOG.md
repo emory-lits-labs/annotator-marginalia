@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3
+
+* Highlight an annotation on load when a page is accessed with an anchor text corresponding to
+   an annotation id.
+
 ## 0.2.3
 
 * Improved editor window placement relative to marginalia item.

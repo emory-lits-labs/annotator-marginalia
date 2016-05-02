@@ -331,6 +331,19 @@ function annotatorMarginalia(user_options) {
           }
         });
 
+        // if the url has a hash corresponding to an annotation, show it
+        if (window.location.hash) {
+          // assume hash (without #) is annotation id
+          var selected_id = window.location.hash.replace('#', '');
+          $annotation = $('.annotator-hl[data-annotation-id='+selected_id+']');
+          if ($annotation.length) {
+            // if an annotation is found, trigger click to mark the
+            // highlight and scroll the corresponding marginalia item
+            $annotation.trigger('click.marginalia');
+            // scroll the body to make sure the highlight is displayed
+            $('html, body').scrollTop($annotation.offset().top - 250);
+          }
+        }
         return true;
       },
 
@@ -502,5 +515,6 @@ function annotatorMarginalia(user_options) {
       }
   };
   // return marginalia object
+
   return marginalia;
 }
