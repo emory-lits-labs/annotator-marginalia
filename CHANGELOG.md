@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4
+
+* Check permissions before for displaying edit and delete menu options.
+
 ## 0.3
 
 * Highlight an annotation on load when a page is accessed with an anchor text corresponding to

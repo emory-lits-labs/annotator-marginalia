@@ -3,7 +3,7 @@
 function annotatorMarginalia(user_options) {
 
   var _t = annotator.util.gettext;
-  var _app;
+  var _app, ident, authz;
 
   // default options
   var options = {
@@ -64,6 +64,8 @@ function annotatorMarginalia(user_options) {
   var marginalia = {
       start: function (app) {
         _app = app;
+        ident = app.registry.getUtility('identityPolicy');
+        authz = app.registry.getUtility('authorizationPolicy');
 
         // check for moment.js, used for displaying updated date
         if (typeof(moment) == 'undefined' || typeof moment !== 'function') {
@@ -164,6 +166,19 @@ function annotatorMarginalia(user_options) {
 
       // Returns the annotion in the marginalia list format
       renderAnnotation: function(annotation){
+        var can_edit, can_delete;
+        // check if user can edit or delete, to determine
+        // what menu items to display (if any)
+        if (typeof authz.extended_permits === "function") {
+          // if extended permit is available, use it; uses whole ident object
+          can_edit = authz.extended_permits('update', annotation, ident);
+          can_delete = authz.extended_permits('delete', annotation, ident);
+        } else {
+          // otherwise, use built-in authz and username-only identity checking
+          can_edit = authz.permits('update', annotation, ident.who());
+          can_delete = authz.permits('delete', annotation, ident.who());
+        }
+
         var text = $('<div/>').attr({
             class:'text'
             }).html(marginalia.render(annotation)),
@@ -171,19 +186,28 @@ function annotatorMarginalia(user_options) {
               '<nav class="controls dropdown">',
                 '<a id="drop'+ annotation.id +'" class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">',
                   '<span class="fa fa-ellipsis-v"></span></a>',
-                '<ul id="menu'+ annotation.id +'" class="dropdown-menu" role="menu" aria-labelledby="drop4'+ annotation.id +'">',
-                  '<li role="presentation"><a role="menuitem" tabindex="-1" class="btn btn-default btn-edit"><span class="fa fa-pencil"></span> Edit</a></li>',
-                  '<li role="presentation"><a role="menuitem" tabindex="-1" class="btn btn-default btn-delete"><span class="fa fa-trash-o"></span> Delete</a></li>',
-                '</ul>',
-              '</nav>'
+                '<ul id="menu'+ annotation.id +'" class="dropdown-menu" role="menu" aria-labelledby="drop4'+ annotation.id +'">'
             ];
+
+            if (can_edit) {
+              controls.push('<li role="presentation"><a role="menuitem" tabindex="-1" class="btn btn-default btn-edit"><span class="fa fa-pencil"></span> Edit</a></li>');
+            }
+            if (can_delete) {
+              controls.push('<li role="presentation"><a role="menuitem" tabindex="-1" class="btn btn-default btn-delete"><span class="fa fa-trash-o"></span> Delete</a></li>')
+            }
+            controls.concat(['</ul>', '</nav>']);
 
             controls = controls.join('\n');
 
             $marginalia_item = $('<li/>').attr({
               class: marginalia_item_class,
               'data-annotation-id': annotation.id
-            }).append(controls).append(text);
+            });
+            // don't add the menu if user can't edit or delete
+            if (can_edit || can_delete) {
+              $marginalia_item.append(controls);
+            }
+            $marginalia_item.append(text);
 
             // display tags if set; based on annotator.ui.tags.viewerExtension
             var tags = marginalia.renderTags(annotation);
