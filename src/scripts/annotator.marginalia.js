@@ -169,14 +169,19 @@ function annotatorMarginalia(user_options) {
         var can_edit, can_delete;
         // check if user can edit or delete, to determine
         // what menu items to display (if any)
-        if (typeof authz.extended_permits === "function") {
-          // if extended permit is available, use it; uses whole ident object
-          can_edit = authz.extended_permits('update', annotation, ident);
-          can_delete = authz.extended_permits('delete', annotation, ident);
-        } else {
-          // otherwise, use built-in authz and username-only identity checking
-          can_edit = authz.permits('update', annotation, ident.who());
-          can_delete = authz.permits('delete', annotation, ident.who());
+        if (authz) {
+          // authz should be available under normal circumtances,
+          // but not when render method is used independently
+          // (e.g., in annotation search module)
+          if (typeof authz.extended_permits === "function") {
+            // if extended permit is available, use it; uses whole ident object
+            can_edit = authz.extended_permits('update', annotation, ident);
+            can_delete = authz.extended_permits('delete', annotation, ident);
+          } else {
+            // otherwise, use built-in authz and username-only identity checking
+            can_edit = authz.permits('update', annotation, ident.who());
+            can_delete = authz.permits('delete', annotation, ident.who());
+          }
         }
 
         var text = $('<div/>').attr({
