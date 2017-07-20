@@ -153,7 +153,7 @@ function annotatorMarginalia(user_options) {
 
         $highlights.each(function(){
           var $this = $(this),
-              this_annotation = $this.data('annotation-id');
+              this_annotation = $this.data('annotation-id').toString();
 
           if( highlight_group_annotation !== this_annotation ){
             highlight_group_annotation = this_annotation;
