@@ -1,5 +1,11 @@
 # Changelog
 
+
+## 0.4.1
+
+* Fix missing annotation issue that is caused by using integers as annotation ids
+
+
 ## 0.4
 
 * Check permissions before for displaying edit and delete menu options.
