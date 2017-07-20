@@ -1,6 +1,6 @@
 {
   "name": "annotator-marginalia",
-  "version": "0.5.0-dev",
+  "version": "0.4.1",
   "repository": {
      "type": "git",
       "url": "git://github.com/emory-lits-labs/annotator-marginalia.git"
